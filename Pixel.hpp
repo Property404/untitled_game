@@ -23,4 +23,15 @@ struct Pixel final {
         this->green = val;
         this->blue = val;
     }
+
+    inline void set_grayscale_avg() {
+        const auto avg = (red + green + blue)/3;
+        this->set_grayscale(avg);
+    }
+
+    inline void invert() {
+        this->red = 255 - this->red;
+        this->green = 255 - this->green;
+        this->blue = 255 - this->green;
+    }
 };
