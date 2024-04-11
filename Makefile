@@ -1,6 +1,7 @@
 NATIVE_CXX=g++
 CXX=em++
 CXXFLAGS=-std=c++20 -O0 -Wall -Wextra
+NATIVE_CXXFLAGS=$(CXXFLAGS) -fsanitize=address,undefined
 
 WASM_BUILD_DIR=build/wasm
 NATIVE_BUILD_DIR=build/native
@@ -20,14 +21,14 @@ build:
 test: build $(TEST_OUTPUT)
 	./$(TEST_OUTPUT)
 $(TEST_OUTPUT): $(TEST_OBJECTS) *.hpp
-	$(NATIVE_CXX) $(CXXFLAGS) $(TEST_OBJECTS) -o $(TEST_OUTPUT)
+	$(NATIVE_CXX) $(NATIVE_CXXFLAGS) $(TEST_OBJECTS) -o $(TEST_OUTPUT)
 $(OUTPUT): $(OBJECTS) *.hpp
 	$(CXX) $(CXXFLAGS) $(OBJECTS)
 	echo "Built!"
 $(WASM_BUILD_DIR)/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $(^) -o $@
 $(NATIVE_BUILD_DIR)/%.o: %.cpp
-	$(NATIVE_CXX) $(CXXFLAGS) -c $(^) -o $@
+	$(NATIVE_CXX) $(NATIVE_CXXFLAGS) -c $(^) -o $@
 clean:
 	rm -f $(OBJECTS) $(TEST_OBJECTS)
 	rm -f *.wasm
