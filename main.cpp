@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <iostream>
+#include <cmath>
 #include <emscripten.h>
 #include <emscripten/html5.h>
 #include "Pixel.hpp"
 #include "GameData.hpp"
 #include "KeyPress.hpp"
+#include "Clamped.hpp"
 
 const size_t WIDTH=160;
 const size_t HEIGHT=240;
@@ -13,58 +16,21 @@ const size_t BLOCK_SIZE=5;
 const size_t PADDLE_HEIGHT = BLOCK_SIZE;
 const size_t PADDLE_WIDTH = BLOCK_SIZE*5;
 
-struct Clamped {
-    size_t _x=0;
-    size_t _y=0;
-    size_t _width=0;
-    size_t _height=0;
+struct Point {
+    Clamped<long> x;
+    Clamped<long> y;
+    long x_clamp;
+    long y_clamp;
 
-    public:
-    Clamped(size_t x, size_t y, size_t width, size_t height):
-        _x(x),_y(y),_width(width),_height(height){
-            if(x >= width || y >= height) {
-                throw std::runtime_error("Clamped incorrect parameters");
-            }
+    Point() = delete;
 
-            if(width == 0 || height == 0) {
-                throw std::runtime_error("Clamped incorrect parameters");
-            }
+    Point(long xx,long yy,long width, long height):x(xx,0l,width),y(yy,0l,height) {
+        x_clamp = width;
+        y_clamp = height;
     }
 
-    size_t x() const {
-        return this->_x;
-    }
-
-    void set_x(ssize_t val) {
-        if (val < 0) {
-            this->_x = 0;
-        } else if (static_cast<size_t>(val) >= this->_width)  {
-            this->_x = this->_width - 1;
-        } else {
-            this->_x = val;
-        }
-    }
-
-    void inc_x(ssize_t val) {
-        this->set_x(_x + val);
-    }
-
-    size_t y() const {
-        return this->_y;
-    }
-
-    void set_y(ssize_t val) {
-        if (val < 0) {
-            this->_y = 0;
-        } else if (static_cast<size_t>(val) >= this->_height)  {
-            this->_y = this->_height - 1;
-        } else {
-            this->_y = val;
-        }
-    }
-
-    void inc_y(ssize_t val) {
-        this->set_y(_y + val);
+    bool hit_clamp() const {
+        return x == x_clamp || y == y_clamp || x == 0 || y == 0;
     }
 };
 
@@ -88,7 +54,8 @@ void draw_block(GameData* game_data, size_t x, size_t y, size_t width, size_t he
             const size_t index = row * game_data->width() + col % game_data->height();
             auto& pix = game_data->pixels()[index];
             auto sat = 150;
-            pix.blue = (255-sat < pix.blue)?255:(pix.blue+sat);
+            //pix.blue = (255-sat < pix.blue)?255:(pix.blue+sat);
+            pix.blue = 0;
             pix.red = (255-sat < pix.red)?255:(pix.red+sat);
             pix.green = (255-sat < pix.green)?255:(pix.green+sat);
         }
@@ -118,22 +85,59 @@ static int keyup(int, const EmscriptenKeyboardEvent* event, void* ptr) {
 void main_loop(void* ptr) {
     GameData* game_data = static_cast<GameData*>(ptr);
 
-    static int x = game_data->width()/2 - PADDLE_WIDTH/2;
-    static int y = game_data->height() - 1;
-    static Clamped paddle(x, y, game_data->width(), game_data->height());
+    static double ball_angle = .9;
+
+    static Point ball(
+            game_data->width()/2,
+            game_data->height()/2,
+            game_data->width() - BLOCK_SIZE,
+            game_data->height()
+    );
+
+    static Point paddle(
+            0,
+            game_data->height(),
+            game_data->width() - PADDLE_WIDTH,
+            game_data->height()
+    );
 
     const auto keypress = game_data->get_keypress();
     if (keypress == KeyPress::Left) {
-        paddle.inc_x(-1);
+        paddle.x--;
     } else if (keypress == KeyPress::Right) {
-        paddle.inc_x(1);
+        paddle.x++;
+    }
+
+    ball.x += cos(ball_angle);
+    ball.y += sin(ball_angle);
+
+    if (ball.hit_clamp()) {
+        ball_angle = -ball_angle;
     }
 
     for (size_t i=0; i < game_data->area(); i++) {
-        game_data->pixels()[i].set_rgb((x*255/WIDTH), 255-(y*255/HEIGHT),255-(x*255/WIDTH));
+        game_data->pixels()[i].set_rgb(
+                ((ball.x+paddle.x.inner()) % 255).inner(),
+                ((paddle.y*255/HEIGHT) + -255).inner(),
+                ((paddle.x*255/WIDTH) + -255).inner()
+                );
     }
 
-    draw_block(game_data, x, y % game_data->height() - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT);
+    draw_block(
+            game_data,
+            paddle.x.inner(),
+            (paddle.y - PADDLE_HEIGHT).inner(),
+            PADDLE_WIDTH,
+            PADDLE_HEIGHT
+    );
+
+    draw_block(
+            game_data,
+            ball.x.inner(),
+            ball.y.inner(),
+            BLOCK_SIZE,
+            BLOCK_SIZE
+    );
 
     draw(game_data);
 }
