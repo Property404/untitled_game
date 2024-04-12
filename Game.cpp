@@ -1,5 +1,5 @@
 #include "Game.hpp"
-#include "Pixel.hpp"
+#include "Color.hpp"
 #include <optional>
 #include <iostream>
 
@@ -9,13 +9,13 @@ class GameImpl final {
 
     std::optional<KeyPress> key_press;
     // This needs to be abstracted out
-    std::vector<Pixel> _pixels{};
+    std::vector<Color> _pixels{};
     
     public:
     GameImpl(size_t width, size_t height) :
         _width(width), _height(height)
     {
-        _pixels = std::vector<Pixel>(width * height, Pixel(1,2,100));
+        _pixels = std::vector<Color>(width * height, Color(1,2,100));
     }
 
     friend class Game;
@@ -39,7 +39,7 @@ void Game::onKeyUp(KeyPress key_press) {
     }
 }
 
-const std::vector<Pixel>& Game::pixels() const {
+const std::vector<Color>& Game::pixels() const {
     return this->impl->_pixels;
 }
 

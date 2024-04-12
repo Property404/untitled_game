@@ -1,15 +1,16 @@
 #pragma once
 #include <stdint.h>
+#include <ostream>
 
-struct Pixel final {
+struct Color final {
     uint32_t red:8 = 0;
     uint32_t green:8 = 0;
     uint32_t blue:8 = 0;
     uint32_t alpha:8 = 255;
 
-    inline Pixel() {}
+    inline Color() {}
 
-    inline Pixel(uint8_t red, uint8_t green, uint8_t blue) : red(red), green(green), blue(blue) {
+    inline Color(uint8_t red, uint8_t green, uint8_t blue) : red(red), green(green), blue(blue) {
     }
 
     inline void set_rgb(uint8_t red, uint8_t green, uint8_t blue) {
@@ -33,5 +34,22 @@ struct Pixel final {
         this->red = 255 - this->red;
         this->green = 255 - this->green;
         this->blue = 255 - this->green;
+    }
+
+    friend std::ostream& operator<< (std::ostream& stream, const Color& that) {
+        return (stream <<
+                "rgba(" << std::dec
+                << that.red << ","
+                << that.green << ","
+                << that.blue << ","
+                << that.alpha << ")");
+    }
+
+    bool operator==(Color other) {
+        return
+            other.red == red &&
+            other.green == green &&
+            other.blue == blue &&
+            other.alpha == alpha;
     }
 };

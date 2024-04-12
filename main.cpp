@@ -4,7 +4,7 @@
 #include <optional>
 #include <emscripten.h>
 #include <emscripten/html5.h>
-#include "Pixel.hpp"
+#include "Color.hpp"
 #include "KeyPress.hpp"
 #include "Clamped.hpp"
 #include "Game.hpp"
@@ -29,7 +29,7 @@ std::optional<KeyPress> keypress_from_event(const EmscriptenKeyboardEvent* event
 void draw(const Game* game) {
     const auto height = game->height();
     const auto width = game->width();
-    const Pixel* data = game->pixels().data();
+    const Color* data = game->pixels().data();
 
     EM_ASM_({
             const data = Module.HEAPU8.slice($0, $0 + $1 * $2 * 4);

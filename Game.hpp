@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <memory>
 #include <vector>
-#include "Pixel.hpp"
+#include "Color.hpp"
 #include "KeyPress.hpp"
 
 // Object used for PIMPL idiom
@@ -26,7 +26,7 @@ class Game final {
     /// On keypress
     void onKeyUp(KeyPress keypress);
 
-    const std::vector<Pixel>& pixels() const;
+    const std::vector<Color>& pixels() const;
 
     /// main loop
     void step();
