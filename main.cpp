@@ -11,7 +11,7 @@
 
 const size_t WIDTH=160;
 const size_t HEIGHT=240;
-const size_t FRAME_RATE=60;
+const size_t FRAME_RATE=30;
 
 std::optional<KeyPress> keypress_from_event(const EmscriptenKeyboardEvent* event) {
     if (!std::strcmp(event->key, "ArrowLeft")) {
@@ -63,7 +63,6 @@ static int keyup(int, const EmscriptenKeyboardEvent* event, void* ptr) {
 
 
 void main_loop(void* ptr) {
-    std::cout << "STEPPING" << "\n";
     Game* game = static_cast<Game*>(ptr);
     game->step();
     draw(game);

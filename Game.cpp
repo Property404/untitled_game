@@ -1,21 +1,43 @@
 #include "Game.hpp"
 #include "Color.hpp"
+#include "Board.hpp"
 #include <optional>
 #include <iostream>
+#include <algorithm>
+#include <cmath>
 
 class GameImpl final {
     size_t _width{};
     size_t _height{};
+    uint64_t _steps;
 
     std::optional<KeyPress> key_press;
-    // This needs to be abstracted out
-    std::vector<Color> _pixels{};
+    Board _board;
     
     public:
     GameImpl(size_t width, size_t height) :
-        _width(width), _height(height)
+        _width(width), _height(height), _board(width, height)
     {
-        _pixels = std::vector<Color>(width * height, Color(1,2,100));
+    }
+
+    void step() {
+        auto color = Color(
+                    abs(cos(_steps/200.0))*255,
+                    abs(cos(_steps/2000.0))*255,
+                    abs(sin(_steps/200.0))*255
+                    );
+        _board.clear(color);
+        color.red = 255-color.red;
+        color.blue = color.blue;
+        color.green = color.green;
+        _board.drawBox(
+                _steps % _width - 5,
+                100,
+                5,
+                5,
+                color
+                );
+        _steps++;
     }
 
     friend class Game;
@@ -40,13 +62,11 @@ void Game::onKeyUp(KeyPress key_press) {
 }
 
 const std::vector<Color>& Game::pixels() const {
-    return this->impl->_pixels;
+    return this->impl->_board.pixels();
 }
 
 void Game::step() {
-    for (auto& pixel : this->impl->_pixels) {
-        pixel.set_rgb(100,10,30);
-    }
+    this->impl->step();
 }
 
 Game::Game(size_t width, size_t height) {
