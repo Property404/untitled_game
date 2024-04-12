@@ -12,7 +12,7 @@ TEST_OUTPUT=$(NATIVE_BUILD_DIR)/test.elf
 COMMON_SOURCES=Game.cpp
 TEST_SOURCES=test/harness.cpp test/main.cpp test/clamping.cpp test/game.cpp $(COMMON_SOURCES)
 TEST_OBJECTS=$(TEST_SOURCES:%.cpp=$(NATIVE_BUILD_DIR)/%.o)
-SOURCES=main.cpp GameData.cpp KeyPress.cpp
+SOURCES=main.cpp $(COMMON_SOURCES)
 OBJECTS=$(SOURCES:%.cpp=$(WASM_BUILD_DIR)/%.o)
 
 all: build $(OUTPUT)
