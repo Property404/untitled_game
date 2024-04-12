@@ -9,7 +9,8 @@ NATIVE_BUILD_DIR=build/native
 OUTPUT=a.out.js
 TEST_OUTPUT=$(NATIVE_BUILD_DIR)/test.elf
 
-TEST_SOURCES=test/harness.cpp test/main.cpp test/clamping.cpp
+COMMON_SOURCES=Game.cpp
+TEST_SOURCES=test/harness.cpp test/main.cpp test/clamping.cpp test/game.cpp $(COMMON_SOURCES)
 TEST_OBJECTS=$(TEST_SOURCES:%.cpp=$(NATIVE_BUILD_DIR)/%.o)
 SOURCES=main.cpp GameData.cpp KeyPress.cpp
 OBJECTS=$(SOURCES:%.cpp=$(WASM_BUILD_DIR)/%.o)
