@@ -16,8 +16,10 @@ public:
     Object(Sprite sprite, int32_t x, int32_t y) :
         _sprite(sprite), x(x), y(y) {}
 
+    static Object createStatic(Sprite sprite, int32_t x, int32_t y);
+
     /// Flip horizontally
-    inline void flip() { _flipped = true;};
+    inline void setFlipped(bool flipped) { _flipped = flipped;};
 
     /// Check if flipped
     inline bool isFlipped() const {return _flipped;};

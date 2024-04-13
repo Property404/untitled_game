@@ -19,6 +19,8 @@ class Board {
 
     void clear(Color color);
 
+    void shift(int32_t delta_x, int32_t y);
+
     void drawBox(size_t x, size_t y, size_t width, size_t height, Color color);
 
     void drawSprite(const Sprite&, size_t x, size_t y, bool flip = false);

@@ -51,3 +51,8 @@ const std::vector<Color>& Board::pixels() const {
 std::vector<Color>& Board::pixels() {
     return this->_pixels;
 }
+
+void Board::shift(int32_t delta_x, int32_t delta_y) {
+    _offset_x += delta_x;
+    _offset_y += delta_y;
+}

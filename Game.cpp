@@ -24,9 +24,10 @@ class GameImpl final {
     public:
     GameImpl(size_t width, size_t height) :
         _width(width), _height(height), 
-        _player(Sprite(std::filesystem::path("assets/may.rgba"), 16, 32), 0, 0),
+        _player(Object::createStatic(Sprite(std::filesystem::path("assets/may.rgba"), 16, 32), _width/2, _height/2)),
         _board(width, height)
     {
+        _objects.emplace_back(Sprite(std::filesystem::path("assets/may.rgba"), 16, 32), 100, 100);
     }
 
     void set_background() {
@@ -44,14 +45,25 @@ class GameImpl final {
     void step() {
         if (key_press == KeyPress::Up) {
             _player.setIndex(1);
+            _board.shift(0, -1);
         } else if (key_press == KeyPress::Down) {
             _player.setIndex(0);
+            _board.shift(0, 1);
         } else if (key_press == KeyPress::Left) {
             _player.setIndex(2);
+            _player.setFlipped(false);
+            _board.shift(-1, 0);
         } else if (key_press == KeyPress::Right) {
             _player.setIndex(2);
+            _player.setFlipped(true);
+            _board.shift(1, 0);
         }
         set_background();
+
+        for(auto& object : _objects) {
+            _board.drawObject(object);
+        }
+
         _board.drawObject(_player);
         _steps++;
     }
