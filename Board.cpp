@@ -23,7 +23,10 @@ void Board::drawSprite(const Sprite& sprite, size_t x, size_t y) {
     for (size_t row = y; row < y + sprite.height(); row++) {
         for (size_t col = x; col < x + sprite.width(); col++) {
             // Can optimize here
-            this->_pixels.at(row*_width + col) = sprite.pixels().at((row-y) * sprite.width() + (col-x));
+            const auto spix = sprite.pixels().at((row-y) * sprite.width() + (col-x));
+            if (spix.alpha > 0) {
+                this->_pixels.at(row*_width + col).set_rgb(spix.red, spix.green, spix.blue);
+            }
         }
     }
 }
