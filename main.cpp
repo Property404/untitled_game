@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdint.h>
 #include <iostream>
 #include <optional>
@@ -6,7 +5,6 @@
 #include <emscripten/html5.h>
 #include "Color.hpp"
 #include "KeyPress.hpp"
-#include "Clamped.hpp"
 #include "Game.hpp"
 
 const size_t WIDTH=160;
@@ -41,7 +39,6 @@ void draw(const Game* game) {
 }
 
 static int keydown(int, const EmscriptenKeyboardEvent* event, void* ptr) {
-    std::cout << "KEYDOWN" << "\n";
     Game* game_data = static_cast<Game*>(ptr);
     const auto keypress = keypress_from_event(event);
     if (keypress.has_value()) {
@@ -51,7 +48,6 @@ static int keydown(int, const EmscriptenKeyboardEvent* event, void* ptr) {
 }
 
 static int keyup(int, const EmscriptenKeyboardEvent* event, void* ptr) {
-    std::cout << "KEYUP" << "\n";
     Game* game_data = static_cast<Game*>(ptr);
     const auto keypress = keypress_from_event(event);
 

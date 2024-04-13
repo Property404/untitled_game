@@ -1,5 +1,6 @@
 #pragma once
 #include "Color.hpp"
+#include "Sprite.hpp"
 #include <vector>
 #include <cstdint>
 
@@ -16,6 +17,8 @@ class Board {
     void clear(Color color);
 
     void drawBox(size_t x, size_t y, size_t width, size_t height, Color color);
+
+    void drawSprite(const Sprite&, size_t x, size_t y);
 
     const std::vector<Color>& pixels() const;
 

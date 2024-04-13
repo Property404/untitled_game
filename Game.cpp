@@ -1,9 +1,11 @@
 #include "Game.hpp"
 #include "Color.hpp"
 #include "Board.hpp"
+#include "Sprite.hpp"
 #include <optional>
 #include <iostream>
 #include <algorithm>
+#include <filesystem>
 #include <cmath>
 
 class GameImpl final {
@@ -12,12 +14,14 @@ class GameImpl final {
     uint64_t _steps;
 
     std::optional<KeyPress> key_press;
+    std::vector<Sprite> _sprites;
     Board _board;
     
     public:
     GameImpl(size_t width, size_t height) :
         _width(width), _height(height), _board(width, height)
     {
+        _sprites.push_back(Sprite::fromBitmap(std::filesystem::path("assets/may.rgba")));
     }
 
     void step() {
@@ -30,6 +34,7 @@ class GameImpl final {
         color.red = 255-color.red;
         color.blue = color.blue;
         color.green = color.green;
+        _board.drawSprite(_sprites.at(0), 50,50);
         _board.drawBox(
                 _steps % _width - 5,
                 100,

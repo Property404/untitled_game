@@ -2,5 +2,7 @@
 #include "harness.hpp"
 
 TEST_CASE(construct_game, {
-        Game game(100,100);
+        Game game(200,200);
+
+        game.step();
 });
