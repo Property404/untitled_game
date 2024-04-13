@@ -6,8 +6,11 @@
 !*.cpp
 !*.h
 !*.hpp
-!*.js
 !Makefile
+
+!*.html
+!*.js
+!*.css
 
 !*.rs
 !*.toml
