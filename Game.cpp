@@ -2,6 +2,7 @@
 #include "Color.hpp"
 #include "Board.hpp"
 #include "Sprite.hpp"
+#include "Object.hpp"
 #include <optional>
 #include <iostream>
 #include <algorithm>
@@ -11,19 +12,19 @@
 class GameImpl final {
     size_t _width{};
     size_t _height{};
-    uint64_t _steps;
+    uint64_t _steps = 0;
 
-    std::optional<KeyPress> key_press;
-    std::vector<Sprite> _sprites;
+    std::optional<KeyPress> key_press{};
+    std::vector<Object> _objects{};
 
-    Sprite _player;
+    Object _player;
 
     Board _board;
     
     public:
     GameImpl(size_t width, size_t height) :
         _width(width), _height(height), 
-        _player(std::filesystem::path("assets/may.rgba"), 16, 32),
+        _player(Sprite(std::filesystem::path("assets/may.rgba"), 16, 32), 0, 0),
         _board(width, height)
     {
     }
@@ -50,7 +51,8 @@ class GameImpl final {
         } else if (key_press == KeyPress::Right) {
             _player.setIndex(2);
         }
-        _board.drawSprite(_player, _width/2,_height/2);
+        set_background();
+        _board.drawObject(_player);
         _steps++;
     }
 

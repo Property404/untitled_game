@@ -32,6 +32,18 @@ void Board::drawSprite(const Sprite& sprite, size_t x, size_t y, bool flip) {
     }
 }
 
+void Board::drawObject(const Object& object) {
+    auto x = object.x;
+    auto y = object.y;
+
+    if (!object.isStatic()) {
+        x -= _offset_x;
+        y -= _offset_y;
+    }
+
+    drawSprite(object.sprite(), x, y, object.isFlipped());
+}
+
 const std::vector<Color>& Board::pixels() const {
     return this->_pixels;
 }

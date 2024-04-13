@@ -1,12 +1,15 @@
 #pragma once
 #include "Color.hpp"
 #include "Sprite.hpp"
+#include "Object.hpp"
 #include <vector>
 #include <cstdint>
 
 class Board {
     size_t _width{};
     size_t _height{};
+    int32_t _offset_x = 0;
+    int32_t _offset_y = 0;
     std::vector<Color> _pixels{};
 
     public:
@@ -19,6 +22,8 @@ class Board {
     void drawBox(size_t x, size_t y, size_t width, size_t height, Color color);
 
     void drawSprite(const Sprite&, size_t x, size_t y, bool flip = false);
+
+    void drawObject(const Object&);
 
     const std::vector<Color>& pixels() const;
 
