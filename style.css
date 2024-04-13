@@ -69,4 +69,6 @@ body {
 
 canvas {
     background-color: green;
+    /* This make the canvas pixelated */
+    image-rendering: optimizespeed;
 }

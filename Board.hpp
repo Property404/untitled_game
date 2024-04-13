@@ -18,7 +18,7 @@ class Board {
 
     void drawBox(size_t x, size_t y, size_t width, size_t height, Color color);
 
-    void drawSprite(const Sprite&, size_t x, size_t y);
+    void drawSprite(const Sprite&, size_t x, size_t y, bool flip = false);
 
     const std::vector<Color>& pixels() const;
 

@@ -10,15 +10,7 @@ class Sprite {
     size_t _index = 0;
     std::vector<std::vector<Color>> _pixmap{};
 public:
-    Sprite(size_t width, size_t height, std::vector<Color> pixels) :
-        _width(width),
-        _height(height)
-    {
-        _pixmap.push_back(pixels);
-    }
-
-    /// Construct sprite from bitmap
-    static Sprite fromBitmap(std::filesystem::path&& path);
+    Sprite(std::filesystem::path&& path, size_t width, size_t height);
 
     inline size_t width() const {
         return _width;
@@ -27,6 +19,8 @@ public:
     inline size_t height() const {
         return _height;
     }
+
+    void setIndex(size_t);
 
     const std::vector<Color>& pixels () const;
 };
