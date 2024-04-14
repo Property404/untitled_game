@@ -64,7 +64,7 @@ class GameImpl final {
         }
         set_background();
 
-        for(auto& object : _objects) {
+        for(const auto& object : _objects) {
             _board.drawObject(object);
         }
 
