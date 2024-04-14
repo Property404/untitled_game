@@ -23,10 +23,10 @@ void Board::drawSprite(const Sprite& sprite, size_t x, size_t y, bool flip) {
     for (size_t row = y; row < y + sprite.height(); row++) {
         for (size_t col = x; col < x + sprite.width(); col++) {
             // Can optimize here
-            const auto spix = sprite.pixels().at((row-y) * sprite.width() + (col-x));
-            const auto col_actual = flip ? (x + sprite.width() - col - 1) : col;
+            const auto col_local = flip ? (sprite.width() + x - col - 1) : col - x;
+            const auto spix = sprite.pixels().at((row-y) * sprite.width() + (col_local));
             if (spix.alpha > 0) {
-                this->_pixels.at(row*_width + col_actual).set_rgb(spix.red, spix.green, spix.blue);
+                this->_pixels.at(row*_width + col).set_rgb(spix.red, spix.green, spix.blue);
             }
         }
     }
