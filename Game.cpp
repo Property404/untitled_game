@@ -27,7 +27,9 @@ class GameImpl final {
         _player(Object::createStatic(Sprite(std::filesystem::path("assets/may.rgba"), 16, 32), _width/2, _height/2)),
         _board(width, height)
     {
-        _objects.emplace_back(Sprite(std::filesystem::path("assets/may.rgba"), 16, 32), 100, 100);
+        auto berry = Sprite(std::filesystem::path("assets/berry.rgba"), 48, 48);
+        _objects.emplace_back(berry, 100, 100);
+        _objects.emplace_back(berry, 20, 50);
     }
 
     void set_background() {

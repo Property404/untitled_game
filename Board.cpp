@@ -8,26 +8,24 @@ void Board::clear(Color color) {
     }
 }
 
-void Board::drawBox(size_t x, size_t y, size_t width, size_t height, Color color) {
-    assert(x + width <= this->_width);
-    assert(y + height <= this->_height);
-    for (size_t row = y; row < y + height; row++) {
-        for (size_t col = x; col < x + width; col++) {
-            // This is hot so we might want to optimize this with []
-            this->_pixels.at(row*_width + col) = color;
-        }
-    }
-}
-
-void Board::drawSprite(const Sprite& sprite, size_t x, size_t y, bool flip) {
-    for (size_t row = y; row < y + sprite.height(); row++) {
-        for (size_t col = x; col < x + sprite.width(); col++) {
+void Board::drawSprite(const Sprite& sprite, int32_t x, int32_t y, bool flip) {
+    const int32_t sprite_width = sprite.width();
+    const int32_t sprite_height = sprite.height();
+    for (int32_t row = y; row < y + sprite_height; row++) {
+        for (int32_t col = x; col < x + sprite_width; col++) {
+            const auto col_local = flip ? (sprite_width + x - col - 1) : col - x;
+            const auto spix = sprite.pixels().at((row-y) * sprite_width + (col_local));
             // Can optimize here
-            const auto col_local = flip ? (sprite.width() + x - col - 1) : col - x;
-            const auto spix = sprite.pixels().at((row-y) * sprite.width() + (col_local));
-            if (spix.alpha > 0) {
-                this->_pixels.at(row*_width + col).set_rgb(spix.red, spix.green, spix.blue);
+            if (spix.alpha == 0) {
+                continue;
             }
+            if (row < 0 || row >= static_cast<int32_t>(_height)) {
+                continue;
+            }
+            if (col < 0 || col >= static_cast<int32_t>(_width)) {
+                continue;
+            }
+            this->_pixels.at(row*_width + col).set_rgb(spix.red, spix.green, spix.blue);
         }
     }
 }
