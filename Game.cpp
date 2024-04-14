@@ -48,17 +48,17 @@ class GameImpl final {
 
     void step() {
         if (key_press == KeyPress::Up) {
-            _player.setIndex(1);
+            _player.setIndex((_steps/10)%2?5:6);
             _board.shift(0, -1);
         } else if (key_press == KeyPress::Down) {
-            _player.setIndex(0);
+            _player.setIndex((_steps/10)%2?3:4);
             _board.shift(0, 1);
         } else if (key_press == KeyPress::Left) {
-            _player.setIndex(2);
+            _player.setIndex((_steps/10)%2?2:7);
             _player.setFlipped(false);
             _board.shift(-1, 0);
         } else if (key_press == KeyPress::Right) {
-            _player.setIndex(2);
+            _player.setIndex((_steps/10)%2?2:8);
             _player.setFlipped(true);
             _board.shift(1, 0);
         }
