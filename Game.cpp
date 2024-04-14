@@ -29,7 +29,9 @@ class GameImpl final {
     {
         auto berry = Sprite(std::filesystem::path("assets/berry.rgba"), 48, 48);
         _objects.emplace_back(berry, 100, 100);
-        _objects.emplace_back(berry, 20, 50);
+        for (auto i = -50; i < 500; i++) {
+            _objects.emplace_back(berry, i*50, 50);
+        }
     }
 
     void set_background() {

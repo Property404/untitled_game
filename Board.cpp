@@ -38,8 +38,15 @@ void Board::drawObject(const Object& object) {
         x -= _offset_x;
         y -= _offset_y;
     }
+    const auto sprite_width = static_cast<int32_t>(object.sprite().width());
+    const auto sprite_height = static_cast<int32_t>(object.sprite().height());
 
-    drawSprite(object.sprite(), x, y, object.isFlipped());
+    // Don't draw if we're out of view, because we loop over every pixels
+    if (x + sprite_width >= 0 && x < static_cast<int32_t>(_width) ) {
+        if (y + sprite_height >= 0 && y < static_cast<int32_t>(_height) ) {
+            drawSprite(object.sprite(), x, y, object.isFlipped());
+        }
+    }
 }
 
 const std::vector<Color>& Board::pixels() const {
