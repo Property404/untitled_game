@@ -24,12 +24,12 @@ class GameImpl final {
     public:
     GameImpl(size_t width, size_t height) :
         _width(width), _height(height), 
-        _player(Object::createStatic(Sprite(std::filesystem::path("assets/may.rgba"), 16, 32), _width/2, _height/2)),
+        _player(Object::createStatic(std::make_shared<Sprite>(std::filesystem::path("assets/may.rgba"), 16, 32), _width/2, _height/2)),
         _board(width, height)
     {
-        auto berry = Sprite(std::filesystem::path("assets/berry.rgba"), 48, 48);
+        std::shared_ptr<Sprite> berry = std::make_shared<Sprite>(std::filesystem::path("assets/berry.rgba"), 48, 48);
         _objects.emplace_back(berry, 100, 100);
-        for (auto i = -50; i < 500; i++) {
+        for (auto i = -50; i < 5000; i++) {
             _objects.emplace_back(berry, i*50, 50);
         }
     }
