@@ -7,4 +7,4 @@ TEST_CASE(zdepth, {
     Object obj1(sprite, 0, 0);
     Object obj2(sprite, 0, 50);
     REQUIRE(obj1 < obj2);
-});
+})

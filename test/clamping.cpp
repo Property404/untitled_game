@@ -42,4 +42,4 @@ TEST_CASE(signed_integer, {
     REQUIRE_EQUALS(a++, 50);
     REQUIRE_EQUALS(a--, 51);
     REQUIRE_EQUALS(a, 50);
-});
+})

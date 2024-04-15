@@ -22,4 +22,4 @@ TEST_CASE(construct_game, {
         }
         game.step();
     }
-});
+})

@@ -7,4 +7,4 @@ TEST_CASE(clear_screen, {
     REQUIRE_EQUALS(board.pixels().at(42), Color(255, 0, 0));
     board.clear(Color(0, 255, 0));
     REQUIRE_EQUALS(board.pixels().at(42), Color(0, 255, 0));
-});
+})
