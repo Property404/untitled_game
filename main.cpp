@@ -1,11 +1,11 @@
 #include "Color.hpp"
 #include "Game.hpp"
 #include "KeyPress.hpp"
+#include <cstdint>
 #include <emscripten.h>
 #include <emscripten/html5.h>
 #include <iostream>
 #include <optional>
-#include <stdint.h>
 
 const size_t WIDTH = 160;
 const size_t HEIGHT = 240;

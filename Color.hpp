@@ -1,6 +1,6 @@
 #pragma once
+#include <cstdint>
 #include <ostream>
-#include <stdint.h>
 
 struct Color final {
     uint32_t red : 8 = 0;
