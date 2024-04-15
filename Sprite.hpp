@@ -1,6 +1,5 @@
 #pragma once
 #include "Color.hpp"
-#include <cassert>
 #include <filesystem>
 #include <vector>
 

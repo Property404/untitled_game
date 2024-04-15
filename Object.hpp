@@ -1,9 +1,7 @@
 #pragma once
-#include "Color.hpp"
 #include "Sprite.hpp"
 #include <cstdint>
 #include <memory>
-#include <vector>
 
 /// General representation of a game object
 class Object {

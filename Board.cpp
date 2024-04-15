@@ -1,6 +1,4 @@
 #include "Board.hpp"
-#include <cassert>
-#include <iostream>
 
 void Board::clear(Color color) {
     for (auto& pixel : _pixels) {
