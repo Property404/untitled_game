@@ -6,7 +6,7 @@ COMMON_CXXFLAGS=-std=c++20 -Wall -Wextra -Wextra-semi
 DEBUG_CXXFLAGS=$(COMMON_CXXFLAGS) -sNO_DISABLE_EXCEPTION_CATCHING -fexceptions
 RELEASE_CXXFLAGS=$(COMMON_CXXFLAGS) -O2
 TEST_CXXFLAGS=$(COMMON_CXXFLAGS) -fsanitize=address,undefined
-PERF_CXXFLAGS=$(COMMON_CXXFLAGS) -O2
+PERF_CXXFLAGS=$(COMMON_CXXFLAGS) -O2 -flto
 
 LDFLAGS=$(COMMON_CXXFLAGS) --preload-file assets --use-preload-plugins
 
@@ -21,7 +21,7 @@ PERF_OUTPUT=$(PERF_BUILD_DIR)/test.elf
 
 COMMON_SOURCES=Game.cpp Board.cpp Sprite.cpp Object.cpp
 SOURCES=main.cpp $(COMMON_SOURCES)
-TEST_SOURCES=test/harness.cpp test/main.cpp test/clamping.cpp test/game.cpp \
+TEST_SOURCES=test/harness.cpp test/main.cpp test/game.cpp \
 			 test/board.cpp test/object.cpp $(COMMON_SOURCES)
 
 TEST_OBJECTS=$(TEST_SOURCES:%.cpp=$(TEST_BUILD_DIR)/%.o)
