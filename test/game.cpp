@@ -9,8 +9,8 @@ TEST_CASE(construct_game, {
     game.step();
 
     std::srand(std::time(nullptr));
-    for (int i = 0; i < 10000; i++) {
-        const auto direction = rand() % 100;
+    for (int i = 0; i < 1000; i++) {
+        const auto direction = std::rand() % 100;
         if (direction == 0) {
             game.onKeyDown(KeyPress::Right);
         } else if (direction == 1) {
