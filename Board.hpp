@@ -25,6 +25,10 @@ class Board {
 
     void drawObject(const Object&);
 
+    inline int32_t offsetX() const {return _offset_x;}
+
+    inline int32_t offsetY() const {return _offset_y;}
+
     const std::vector<Color>& pixels() const;
 
     std::vector<Color>& pixels();

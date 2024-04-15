@@ -29,9 +29,10 @@ class GameImpl final {
     {
         std::shared_ptr<Sprite> berry = std::make_shared<Sprite>(std::filesystem::path("assets/berry.rgba"), 48, 48);
         _objects.emplace_back(berry, 100, 100);
-        for (auto i = -50; i < 5000; i++) {
+        for (auto i = 0; i < 5; i++) {
             _objects.emplace_back(berry, i*50, 50);
         }
+        std::sort(_objects.begin(), _objects.end());
     }
 
     void set_background() {
@@ -64,11 +65,24 @@ class GameImpl final {
         }
         set_background();
 
+        bool drew_player = false;
         for(const auto& object : _objects) {
+            if (!drew_player && _player.compareDepth(object, _board.offsetY()) < 0) {
+                _board.drawObject(_player);
+                drew_player = true;
+            } else {
+                std::cout<<"NOT FIRST "<<
+                    "("<<_player.realX(_board.offsetX()) <<", "<<_player.realY(_board.offsetY())<<")\n";
+                    //"("<<object.realX(_board.offsetX()) <<", "<<object.realY(_board.offsetY())<<")\n";
+            }
             _board.drawObject(object);
         }
 
-        _board.drawObject(_player);
+        if (!drew_player) {
+            std::cout<<"LAST\n";
+            _board.drawObject(_player);
+        }
+
         _steps++;
     }
 

@@ -20,6 +20,7 @@ void Board::drawSprite(const Sprite& sprite, int32_t x, int32_t y, bool flip) {
             const auto spix = sprite.pixels().at((row-y) * sprite_width + (col_local));
             // Can optimize here
             if (spix.alpha == 0) {
+                this->_pixels.at(row*_width + col).set_rgb(0, 0, 0);
                 continue;
             }
             if (col < 0 || col >= static_cast<int32_t>(_width)) {
