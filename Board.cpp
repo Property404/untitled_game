@@ -28,7 +28,7 @@ void Board::drawSprite(const Sprite& sprite, int32_t x, int32_t y, bool flip) {
             const auto index = row * _width + col;
             assert(index < _width * _height);
             assert(index < _pixels.size());
-            assert(_width*_height == _pixels.size());
+            assert(_width * _height == _pixels.size());
             this->_pixels.at(index).set_rgb(spix.red, spix.green, spix.blue);
         }
     }
