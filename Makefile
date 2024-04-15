@@ -1,6 +1,6 @@
 NATIVE_CXX=g++
 CXX=em++
-COMMON_CXXFLAGS=-std=c++20 -O0 -Wall -Wextra
+COMMON_CXXFLAGS=-std=c++20 -O0 -Wall -Wextra -Wextra-semi
 WASM_CXXFLAGS=$(COMMON_CXXFLAGS) -sNO_DISABLE_EXCEPTION_CATCHING -fexceptions
 NATIVE_CXXFLAGS=$(COMMON_CXXFLAGS) -fsanitize=address,undefined
 LDFLAGS=$(COMMON_CXXFLAGS) --preload-file assets --use-preload-plugins
