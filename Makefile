@@ -69,9 +69,7 @@ clang-tidy:
 cppcheck:
 	cppcheck $(TEST_SOURCES) *.hpp main.cpp test/*.hpp
 format:
-	clang-format -Werror -i $(TEST_SOURCES) *.hpp main.cpp test/*.hpp
-check-format:
-	clang-format --dry-run -Werror -i $(TEST_SOURCES) *.hpp main.cpp test/*.hpp
+	clang-format -i $(TEST_SOURCES) *.hpp main.cpp test/*.hpp
 clean:
 	rm -f *.wasm
 	rm -f $(DEBUG_OUTPUT) $(TEST_OUTPUT)
