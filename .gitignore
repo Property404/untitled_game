@@ -14,11 +14,16 @@
 !*.js
 !*.css
 
+!*.yml
+
 !*.rs
 !*.toml
 !Cargo.lock
-target
 
+!assets/*.rgba
+!assets/*.png
+
+target
 build
 publish
 a.out.*
