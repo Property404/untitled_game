@@ -1,4 +1,5 @@
 #include "Board.hpp"
+#include <cassert>
 
 void Board::clear(Color color) {
     for (auto& pixel : _pixels) {
@@ -16,15 +17,19 @@ void Board::drawSprite(const Sprite& sprite, int32_t x, int32_t y, bool flip) {
         for (int32_t col = x; col < x + sprite_width; col++) {
             const auto col_local = flip ? (sprite_width + x - col - 1) : col - x;
             const auto spix = sprite.pixels().at((row - y) * sprite_width + (col_local));
+            if (col < 0 || col >= static_cast<int32_t>(_width)) {
+                continue;
+            }
             // Can optimize here
             if (spix.alpha == 0) {
                 this->_pixels.at(row * _width + col).set_rgb(0, 0, 0);
                 continue;
             }
-            if (col < 0 || col >= static_cast<int32_t>(_width)) {
-                continue;
-            }
-            this->_pixels.at(row * _width + col).set_rgb(spix.red, spix.green, spix.blue);
+            const auto index = row * _width + col;
+            assert(index < _width * _height);
+            assert(index < _pixels.size());
+            assert(_width*_height == _pixels.size());
+            this->_pixels.at(index).set_rgb(spix.red, spix.green, spix.blue);
         }
     }
 }
