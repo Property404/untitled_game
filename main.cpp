@@ -67,6 +67,13 @@ void main_loop(void* ptr) {
 
 int main() {
     static auto game_data = Game(WIDTH, HEIGHT);
+
+    EM_ASM_(
+        {
+            Module.canvas = document.querySelector("#canvas");
+            Module.canvas.focus();
+        });
+
     emscripten_set_keydown_callback("#canvas", &game_data, 1, keydown);
     emscripten_set_keyup_callback("#canvas", &game_data, 1, keyup);
     emscripten_set_main_loop_arg(main_loop, &game_data, FRAME_RATE, 1);

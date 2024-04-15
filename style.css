@@ -49,3 +49,6 @@ canvas {
     /* This make the canvas pixelated */
     image-rendering: optimizespeed;
 }
+canvas:focus {
+    outline: none;
+}
