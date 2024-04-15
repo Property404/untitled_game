@@ -7,8 +7,8 @@
 #include <iostream>
 #include <optional>
 
-const size_t WIDTH = 160;
-const size_t HEIGHT = 240;
+const size_t WIDTH = 240;
+const size_t HEIGHT = 160;
 const size_t FRAME_RATE = 60;
 
 std::optional<KeyPress> keypress_from_event(const EmscriptenKeyboardEvent* event) {
