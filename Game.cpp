@@ -70,16 +70,11 @@ class GameImpl final {
             if (!drew_player && _player.compareDepth(object, _board.offsetY()) < 0) {
                 _board.drawObject(_player);
                 drew_player = true;
-            } else {
-                std::cout<<"NOT FIRST "<<
-                    "("<<_player.realX(_board.offsetX()) <<", "<<_player.realY(_board.offsetY())<<")\n";
-                    //"("<<object.realX(_board.offsetX()) <<", "<<object.realY(_board.offsetY())<<")\n";
             }
             _board.drawObject(object);
         }
 
         if (!drew_player) {
-            std::cout<<"LAST\n";
             _board.drawObject(_player);
         }
 

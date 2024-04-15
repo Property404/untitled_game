@@ -1,8 +1,9 @@
 NATIVE_CXX=g++
 CXX=em++
-LDFLAGS=$(CXXFLAGS) --preload-file assets --use-preload-plugins
-CXXFLAGS=-std=c++20 -O0 -Wall -Wextra
-NATIVE_CXXFLAGS=$(CXXFLAGS) -fsanitize=address,undefined
+COMMON_CXXFLAGS=-std=c++20 -O0 -Wall -Wextra
+WASM_CXXFLAGS=$(COMMON_CXXFLAGS) -sNO_DISABLE_EXCEPTION_CATCHING -fexceptions
+NATIVE_CXXFLAGS=$(COMMON_CXXFLAGS) -fsanitize=address,undefined
+LDFLAGS=$(COMMON_CXXFLAGS) --preload-file assets --use-preload-plugins
 
 WASM_BUILD_DIR=build/wasm
 NATIVE_BUILD_DIR=build/native
@@ -29,7 +30,7 @@ $(OUTPUT): $(OBJECTS) *.hpp
 	$(CXX) $(LDFLAGS) $(OBJECTS)
 	echo "Built!"
 $(WASM_BUILD_DIR)/%.o: %.cpp Makefile *.hpp
-	$(CXX) $(CXXFLAGS) -c $(<) -o $@
+	$(CXX) $(WASM_CXXFLAGS) -c $(<) -o $@
 $(NATIVE_BUILD_DIR)/%.o: %.cpp Makefile *.hpp
 	$(NATIVE_CXX) $(NATIVE_CXXFLAGS) -c $(<) -o $@
 clean:
