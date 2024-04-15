@@ -20,4 +20,5 @@
 target
 
 build
+publish
 a.out.*
