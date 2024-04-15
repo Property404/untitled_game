@@ -1,9 +1,9 @@
 #pragma once
+#include "Color.hpp"
+#include "KeyPress.hpp"
 #include <cstdint>
 #include <memory>
 #include <vector>
-#include "Color.hpp"
-#include "KeyPress.hpp"
 
 // Object used for PIMPL idiom
 class GameImpl;

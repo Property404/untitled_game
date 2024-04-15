@@ -1,9 +1,9 @@
+#include "Board.hpp"
 #include <cassert>
 #include <iostream>
-#include "Board.hpp"
 
 void Board::clear(Color color) {
-    for(auto& pixel : _pixels) {
+    for (auto& pixel : _pixels) {
         pixel = color;
     }
 }
@@ -17,16 +17,16 @@ void Board::drawSprite(const Sprite& sprite, int32_t x, int32_t y, bool flip) {
         }
         for (int32_t col = x; col < x + sprite_width; col++) {
             const auto col_local = flip ? (sprite_width + x - col - 1) : col - x;
-            const auto spix = sprite.pixels().at((row-y) * sprite_width + (col_local));
+            const auto spix = sprite.pixels().at((row - y) * sprite_width + (col_local));
             // Can optimize here
             if (spix.alpha == 0) {
-                this->_pixels.at(row*_width + col).set_rgb(0, 0, 0);
+                this->_pixels.at(row * _width + col).set_rgb(0, 0, 0);
                 continue;
             }
             if (col < 0 || col >= static_cast<int32_t>(_width)) {
                 continue;
             }
-            this->_pixels.at(row*_width + col).set_rgb(spix.red, spix.green, spix.blue);
+            this->_pixels.at(row * _width + col).set_rgb(spix.red, spix.green, spix.blue);
         }
     }
 }
@@ -44,20 +44,16 @@ void Board::drawObject(const Object& object) {
     const auto sprite_height = static_cast<int32_t>(sprite->height());
 
     // Don't draw if we're out of view, because we loop over every pixels
-    if (x + sprite_width >= 0 && x < static_cast<int32_t>(_width) ) {
-        if (y + sprite_height >= 0 && y < static_cast<int32_t>(_height) ) {
+    if (x + sprite_width >= 0 && x < static_cast<int32_t>(_width)) {
+        if (y + sprite_height >= 0 && y < static_cast<int32_t>(_height)) {
             drawSprite(*sprite, x, y, object.isFlipped());
         }
     }
 }
 
-const std::vector<Color>& Board::pixels() const {
-    return this->_pixels;
-}
+const std::vector<Color>& Board::pixels() const { return this->_pixels; }
 
-std::vector<Color>& Board::pixels() {
-    return this->_pixels;
-}
+std::vector<Color>& Board::pixels() { return this->_pixels; }
 
 void Board::shift(int32_t delta_x, int32_t delta_y) {
     _offset_x += delta_x;

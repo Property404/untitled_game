@@ -14,13 +14,9 @@ class KeyPress {
 
     explicit operator bool() const = delete;
 
-    constexpr bool operator==(KeyPress kp) const {
-        return this->_value == kp._value;
-    }
+    constexpr bool operator==(KeyPress kp) const { return this->_value == kp._value; }
 
-    constexpr bool operator!=(KeyPress kp) const {
-        return this->_value != kp._value;
-    }
+    constexpr bool operator!=(KeyPress kp) const { return this->_value != kp._value; }
 
     private:
     Value _value;

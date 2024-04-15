@@ -1,9 +1,9 @@
 #pragma once
 #include "Color.hpp"
-#include "Sprite.hpp"
 #include "Object.hpp"
-#include <vector>
+#include "Sprite.hpp"
 #include <cstdint>
+#include <vector>
 
 class Board {
     size_t _width{};
@@ -14,7 +14,7 @@ class Board {
 
     public:
     Board(size_t width, size_t height) : _width(width), _height(height) {
-        _pixels = std::vector<Color>(width*height,Color(100, 0, 150));
+        _pixels = std::vector<Color>(width * height, Color(100, 0, 150));
     }
 
     void clear(Color color);
@@ -25,9 +25,9 @@ class Board {
 
     void drawObject(const Object&);
 
-    inline int32_t offsetX() const {return _offset_x;}
+    inline int32_t offsetX() const { return _offset_x; }
 
-    inline int32_t offsetY() const {return _offset_y;}
+    inline int32_t offsetY() const { return _offset_y; }
 
     const std::vector<Color>& pixels() const;
 

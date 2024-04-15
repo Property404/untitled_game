@@ -1,15 +1,15 @@
-#include <stdint.h>
-#include <iostream>
-#include <optional>
+#include "Color.hpp"
+#include "Game.hpp"
+#include "KeyPress.hpp"
 #include <emscripten.h>
 #include <emscripten/html5.h>
-#include "Color.hpp"
-#include "KeyPress.hpp"
-#include "Game.hpp"
+#include <iostream>
+#include <optional>
+#include <stdint.h>
 
-const size_t WIDTH=160;
-const size_t HEIGHT=240;
-const size_t FRAME_RATE=60;
+const size_t WIDTH = 160;
+const size_t HEIGHT = 240;
+const size_t FRAME_RATE = 60;
 
 std::optional<KeyPress> keypress_from_event(const EmscriptenKeyboardEvent* event) {
     if (!std::strcmp(event->key, "ArrowLeft")) {
@@ -29,13 +29,15 @@ void draw(const Game* game) {
     const auto width = game->width();
     const Color* data = game->pixels().data();
 
-    EM_ASM_({
+    EM_ASM_(
+        {
             const data = Module.HEAPU8.slice($0, $0 + $1 * $2 * 4);
             const context = Module['canvas'].getContext('2d');
             const image_data = context.getImageData(0, 0, $1, $2);
             image_data.data.set(data);
             context.putImageData(image_data, 0, 0);
-            }, data, width, height);
+        },
+        data, width, height);
 }
 
 static int keydown(int, const EmscriptenKeyboardEvent* event, void* ptr) {
@@ -57,7 +59,6 @@ static int keyup(int, const EmscriptenKeyboardEvent* event, void* ptr) {
     return 0;
 }
 
-
 void main_loop(void* ptr) {
     Game* game = static_cast<Game*>(ptr);
     game->step();
@@ -71,4 +72,3 @@ int main() {
     emscripten_set_main_loop_arg(main_loop, &game_data, FRAME_RATE, 1);
     return 0;
 }
-

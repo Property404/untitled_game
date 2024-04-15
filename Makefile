@@ -37,7 +37,9 @@ $(NATIVE_BUILD_DIR)/%.o: %.cpp Makefile *.hpp
 clang-tidy:
 	clang-tidy $(TEST_SOURCES) *.hpp -extra-arg=-std=c++20
 cppcheck:
-	cppcheck $(TEST_SOURCES) *.hpp main.cpp
+	cppcheck $(TEST_SOURCES) *.hpp main.cpp test/*.hpp
+format:
+	clang-format -i $(TEST_SOURCES) *.hpp main.cpp test/*.hpp
 clean:
 	rm -f $(OBJECTS) $(TEST_OBJECTS)
 	rm -f *.wasm

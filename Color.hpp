@@ -1,20 +1,19 @@
 #pragma once
-#include <stdint.h>
 #include <ostream>
+#include <stdint.h>
 
 struct Color final {
-    uint32_t red:8 = 0;
-    uint32_t green:8 = 0;
-    uint32_t blue:8 = 0;
-    uint32_t alpha:8 = 255;
+    uint32_t red : 8 = 0;
+    uint32_t green : 8 = 0;
+    uint32_t blue : 8 = 0;
+    uint32_t alpha : 8 = 255;
 
     inline Color() {}
 
-    inline Color(uint8_t red, uint8_t green, uint8_t blue) : red(red), green(green), blue(blue) {
-    }
+    inline Color(uint8_t red, uint8_t green, uint8_t blue) : red(red), green(green), blue(blue) {}
 
-    inline Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha) : red(red), green(green), blue(blue), alpha(alpha) {
-    }
+    inline Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
+        : red(red), green(green), blue(blue), alpha(alpha) {}
 
     inline void set_rgb(uint8_t red, uint8_t green, uint8_t blue) {
         this->red = red;
@@ -29,7 +28,7 @@ struct Color final {
     }
 
     inline void set_grayscale_avg() {
-        const auto avg = (red + green + blue)/3;
+        const auto avg = (red + green + blue) / 3;
         this->set_grayscale(avg);
     }
 
@@ -39,20 +38,13 @@ struct Color final {
         this->blue = 255 - this->green;
     }
 
-    friend std::ostream& operator<< (std::ostream& stream, const Color& that) {
-        return (stream <<
-                "rgba(" << std::dec
-                << that.red << ","
-                << that.green << ","
-                << that.blue << ","
-                << that.alpha << ")");
+    friend std::ostream& operator<<(std::ostream& stream, const Color& that) {
+        return (stream << "rgba(" << std::dec << that.red << "," << that.green << "," << that.blue
+                       << "," << that.alpha << ")");
     }
 
     bool operator==(Color other) {
-        return
-            other.red == red &&
-            other.green == green &&
-            other.blue == blue &&
-            other.alpha == alpha;
+        return other.red == red && other.green == green && other.blue == blue &&
+               other.alpha == alpha;
     }
 };
