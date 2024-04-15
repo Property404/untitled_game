@@ -37,9 +37,9 @@ class GameImpl final {
 
     void set_background() {
         auto color = Color(
-                    abs(cos(_steps/200.0))*255,
-                    abs(cos(_steps/2000.0))*255,
-                    abs(sin(_steps/200.0))*255
+                    std::abs(std::cos(_steps/200.0))*255,
+                    std::abs(std::cos(_steps/2000.0))*255,
+                    std::abs(std::sin(_steps/200.0))*255
                     );
         _board.clear(color);
         color.red = 255-color.red;

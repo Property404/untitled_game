@@ -33,6 +33,9 @@ $(WASM_BUILD_DIR)/%.o: %.cpp Makefile *.hpp
 	$(CXX) $(WASM_CXXFLAGS) -c $(<) -o $@
 $(NATIVE_BUILD_DIR)/%.o: %.cpp Makefile *.hpp
 	$(NATIVE_CXX) $(NATIVE_CXXFLAGS) -c $(<) -o $@
+.PHONY: clang-tidy
+clang-tidy:
+	clang-tidy $(COMMON_SOURCES) -extra-arg=-std=c++20
 clean:
 	rm -f $(OBJECTS) $(TEST_OBJECTS)
 	rm -f *.wasm

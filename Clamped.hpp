@@ -1,6 +1,7 @@
 #pragma once
 #include <cassert>
 #include <algorithm>
+#include <ostream>
 
 template<typename T>
 class Clamped {
