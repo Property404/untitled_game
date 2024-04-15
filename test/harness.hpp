@@ -3,7 +3,7 @@
 
 #define TEST_CASE(name, ...)                                                                       \
     static TestCase _puppet_##name(__extract_file_name(__FILE__), #name,                           \
-                                   [](TestCase * __self) __VA_ARGS__);
+                                   []([[maybe_unused]] TestCase * __self) __VA_ARGS__);
 
 #define REQUIRE_EQUALS(value1, value2)                                                             \
     do {                                                                                           \
