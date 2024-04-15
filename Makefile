@@ -5,7 +5,7 @@ COMMON_CXXFLAGS=-std=c++20 -Wall -Wextra -Wextra-semi
 
 DEBUG_CXXFLAGS=$(COMMON_CXXFLAGS) -sNO_DISABLE_EXCEPTION_CATCHING -fexceptions
 RELEASE_CXXFLAGS=$(COMMON_CXXFLAGS) -O2
-TEST_CXXFLAGS=$(COMMON_CXXFLAGS) -fsanitize=address,undefined
+TEST_CXXFLAGS=$(COMMON_CXXFLAGS) -fsanitize=address,undefined -Og
 PERF_CXXFLAGS=$(COMMON_CXXFLAGS) -O2 -flto
 
 LDFLAGS=$(COMMON_CXXFLAGS) --preload-file assets --use-preload-plugins
