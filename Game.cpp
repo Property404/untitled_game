@@ -29,10 +29,11 @@ class GameImpl final {
           _board(width, height) {
         std::shared_ptr<Sprite> berry =
             std::make_shared<Sprite>(std::filesystem::path("assets/berry.rgba"), 48, 48);
-        for (auto i = 0; i < 5; i++) {
+        for (auto i = 0; i < 500; i++) {
             _objects.emplace_back(berry, i * 200, 30);
         }
         std::sort(_objects.begin(), _objects.end());
+        _player.setElevation(20);
     }
 
     void set_background() {
@@ -62,9 +63,11 @@ class GameImpl final {
             _player.setFlipped(true);
             delta_x = 1;
         }
-        const auto shift = _player.detectCollision(_objects, delta_x, delta_y);
-        _board.shift(std::get<0>(shift), std::get<1>(shift));
-        _player.shift(std::get<0>(shift), std::get<1>(shift));
+        if (delta_x || delta_y) {
+            const auto shift = _player.detectCollision(_objects, delta_x, delta_y);
+            _board.shift(std::get<0>(shift), std::get<1>(shift));
+            _player.shift(std::get<0>(shift), std::get<1>(shift));
+        }
         set_background();
 
         bool drew_player = false;

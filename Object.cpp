@@ -23,20 +23,25 @@ int Object::compareDepth(const Object& other) const {
 
 std::tuple<int32_t, int32_t> Object::detectCollision(const std::vector<Object>& objects,
                                                      int32_t delta_x, int32_t delta_y) const {
+    const auto self_low = y + _elevation;
+    const auto self_high = y + _height;
     for (const auto& object : objects) {
-        if (y + height >= object.y && y <= (object.y + object.height)) {
-            if (delta_x > 0 && object.x >= x + width) {
-                delta_x = std::min(delta_x, object.x - x - width);
-            } else if (delta_x < 0 && object.x + object.width <= x) {
-                delta_x = std::max(delta_x, object.x + object.width - x);
+        const auto obj_low = object.y + object._elevation;
+        const auto obj_high = object.y + object._height;
+
+        if (self_high > obj_low && self_low < obj_high) {
+            if (delta_x > 0 && object.x >= x + _width) {
+                delta_x = std::min(delta_x, object.x - x - _width);
+            } else if (delta_x < 0 && object.x + object._width <= x) {
+                delta_x = std::max(delta_x, object.x + object._width - x);
             }
         }
 
-        if (x + width >= object.x && x <= (object.x + object.width)) {
-            if (delta_y > 0 && object.y >= y + height) {
-                delta_y = std::min(delta_y, object.y - y - height);
-            } else if (delta_y < 0 && object.y + object.height <= y) {
-                delta_y = std::max(delta_y, object.y + object.height - y);
+        if (x + _width > object.x && x < (object.x + object._width)) {
+            if (delta_y > 0 && object.y + object._elevation >= y + _height) {
+                delta_y = std::min(delta_y, object.y + object._elevation - y - _height);
+            } else if (delta_y < 0 && object.y + object._height <= y + _elevation) {
+                delta_y = std::max(delta_y, object.y + object._height - y - _elevation);
             }
         }
 

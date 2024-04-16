@@ -1,5 +1,6 @@
 #pragma once
 #include "Sprite.hpp"
+#include <cassert>
 #include <cstdint>
 #include <memory>
 #include <tuple>
@@ -10,16 +11,24 @@ class Object {
     bool _flipped = false;
     int _z_index = 0;
 
-    int32_t width = 0;
-    int32_t height = 0;
+    int32_t _width = 0;
+    int32_t _height = 0;
+    int32_t _elevation = 0;
 
     public:
     int32_t x = 0;
     int32_t y = 0;
 
     Object(std::shared_ptr<Sprite> sprite, int32_t x, int32_t y) : _sprite(sprite), x(x), y(y) {
-        width = sprite->width();
-        height = sprite->height();
+        _width = sprite->width();
+        _height = sprite->height();
+    }
+
+    /// Set elevation
+    inline void setElevation(int32_t elev) {
+        assert(elev >= 0);
+        assert(elev <= _height);
+        _elevation = elev;
     }
 
     /// Flip horizontally

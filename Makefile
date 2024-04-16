@@ -3,7 +3,7 @@ CXX=em++
 
 COMMON_CXXFLAGS=-std=c++20 -Wall -Wextra -Wextra-semi
 
-DEBUG_CXXFLAGS=$(COMMON_CXXFLAGS) -sNO_DISABLE_EXCEPTION_CATCHING -fexceptions
+DEBUG_CXXFLAGS=$(COMMON_CXXFLAGS) -Og
 RELEASE_CXXFLAGS=$(COMMON_CXXFLAGS) -O3 -flto
 TEST_CXXFLAGS=$(COMMON_CXXFLAGS) -fsanitize=address,undefined -Og
 PERF_CXXFLAGS=$(COMMON_CXXFLAGS) -O2 -flto
@@ -68,6 +68,7 @@ clang-tidy:
 	clang-tidy $(TEST_SOURCES) *.hpp -extra-arg=-std=c++20
 cppcheck:
 	cppcheck $(TEST_SOURCES) *.hpp main.cpp test/*.hpp --error-exitcode=1
+	@echo ok
 format:
 	clang-format -i $(TEST_SOURCES) *.hpp main.cpp test/*.hpp
 clean:
