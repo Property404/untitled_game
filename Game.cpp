@@ -24,7 +24,7 @@ class GameImpl final {
     public:
     GameImpl(size_t width, size_t height)
         : _width(width), _height(height),
-          _player(Object(std::make_shared<Sprite>(std::filesystem::path("assets/may.rgba"), 16, 32),
+          _player(Object(std::make_shared<Sprite>(std::filesystem::path("assets/may.rgba"), 16, 24),
                          _width / 2, _height / 2)),
           _board(width, height) {
         std::shared_ptr<Sprite> berry =
@@ -33,7 +33,7 @@ class GameImpl final {
             _objects.emplace_back(berry, i * 200, 30);
         }
         std::sort(_objects.begin(), _objects.end());
-        _player.setElevation(20);
+        _player.setElevation(16);
     }
 
     void set_background() {
