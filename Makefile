@@ -67,7 +67,7 @@ $(PERF_BUILD_DIR)/%.o: %.cpp Makefile *.hpp
 clang-tidy:
 	clang-tidy $(TEST_SOURCES) *.hpp -extra-arg=-std=c++20
 cppcheck:
-	cppcheck $(TEST_SOURCES) *.hpp main.cpp test/*.hpp
+	cppcheck $(TEST_SOURCES) *.hpp main.cpp test/*.hpp --error-exitcode=1
 format:
 	clang-format -i $(TEST_SOURCES) *.hpp main.cpp test/*.hpp
 clean:
