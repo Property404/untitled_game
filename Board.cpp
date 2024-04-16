@@ -35,13 +35,9 @@ void Board::drawSprite(const Sprite& sprite, int32_t x, int32_t y, bool flip) {
 }
 
 void Board::drawObject(const Object& object) {
-    auto x = object.x;
-    auto y = object.y;
+    const auto x = object.x - _offset_x;
+    const auto y = object.y - _offset_y;
 
-    if (!object.isStatic()) {
-        x -= _offset_x;
-        y -= _offset_y;
-    }
     const auto sprite = object.sprite();
     const auto sprite_width = static_cast<int32_t>(sprite->width());
     const auto sprite_height = static_cast<int32_t>(sprite->height());
