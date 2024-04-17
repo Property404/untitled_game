@@ -27,16 +27,36 @@ class GameImpl final {
           _player(Object(std::make_shared<Sprite>(std::filesystem::path("assets/may.rgba"), 16, 24),
                          _width / 2, _height / 2)),
           _board(width, height) {
-        std::shared_ptr<Sprite> tree =
+        std::shared_ptr<Sprite> tamato =
             std::make_shared<Sprite>(std::filesystem::path("assets/tamato.rgba"), 16, 26);
-        tree->setIndex(5);
+        std::shared_ptr<Sprite> persim =
+            std::make_shared<Sprite>(std::filesystem::path("assets/persim.rgba"), 16, 26);
+        tamato->setIndex(5);
+        persim->setIndex(5);
+        std::srand(std::time(nullptr));
         for (auto i = 0; i < 500; i++) {
-            Object object(tree, i * 20 + std::rand() % 20, 30 + std::rand() % 10);
-            object.setElevation(20);
-            _objects.push_back(object);
+            {
+                Object object(tamato, i * 20, 0);
+                object.setElevation(20);
+                object.setShrinkness(4);
+                _objects.push_back(object);
+            }
+            {
+                Object object(tamato, i * 20, 180);
+                object.setElevation(20);
+                object.setShrinkness(4);
+                _objects.push_back(object);
+            }
+            {
+                Object object(tamato, 0, i * 20);
+                object.setElevation(20);
+                object.setShrinkness(4);
+                _objects.push_back(object);
+            }
         }
         std::sort(_objects.begin(), _objects.end());
         _player.setElevation(16);
+        _player.setShrinkness(4);
     }
 
     void set_background() {

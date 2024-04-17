@@ -13,7 +13,10 @@ class Object {
 
     int32_t _width = 0;
     int32_t _height = 0;
+    // How far to shrink hit box from the top
     int32_t _elevation = 0;
+    // How far to shrink hit box horizontally (from both sides)
+    int32_t _shrinkness = 0;
 
     public:
     int32_t x = 0;
@@ -29,6 +32,13 @@ class Object {
         assert(elev >= 0);
         assert(elev <= _height);
         _elevation = elev;
+    }
+
+    /// Set shrinkness
+    inline void setShrinkness(int32_t shrink) {
+        assert(shrink >= 0);
+        assert(shrink < _width / 2);
+        _shrinkness = shrink;
     }
 
     /// Flip horizontally
