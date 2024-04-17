@@ -22,7 +22,7 @@ void Board::drawSprite(const Sprite& sprite, int32_t x, int32_t y, bool flip) {
             }
             // Can optimize here
             if (spix.alpha == 0) {
-                this->_pixels.at(row * _width + col).set_rgb(0, 0, 0);
+                // this->_pixels.at(row * _width + col).set_rgb(0, 0, 0);
                 continue;
             }
             const auto index = row * _width + col;

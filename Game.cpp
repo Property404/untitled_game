@@ -27,10 +27,13 @@ class GameImpl final {
           _player(Object(std::make_shared<Sprite>(std::filesystem::path("assets/may.rgba"), 16, 24),
                          _width / 2, _height / 2)),
           _board(width, height) {
-        std::shared_ptr<Sprite> berry =
-            std::make_shared<Sprite>(std::filesystem::path("assets/berry.rgba"), 48, 48);
+        std::shared_ptr<Sprite> tree =
+            std::make_shared<Sprite>(std::filesystem::path("assets/tamato.rgba"), 16, 26);
+        tree->setIndex(5);
         for (auto i = 0; i < 500; i++) {
-            _objects.emplace_back(berry, i * 200, 30);
+            Object object(tree, i * 20 + std::rand() % 20, 30 + std::rand() % 10);
+            object.setElevation(20);
+            _objects.push_back(object);
         }
         std::sort(_objects.begin(), _objects.end());
         _player.setElevation(16);
